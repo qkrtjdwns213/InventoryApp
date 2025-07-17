@@ -1,16 +1,11 @@
 import streamlit as st
-import pandas as pd
-import datetime
-import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 
-# --- Google Sheets 설정 ---
-# service_account.json 파일을 같은 폴더에 두세요.
-scope = [
-    "https://spreadsheets.google.com/feeds",
-    "https://www.googleapis.com/auth/drive"
-]
-creds = ServiceAccountCredentials.from_json_keyfile_name("service_account.json", scope)
+scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
+
+json_key = st.secrets["google"]  # [google] 섹션 읽기
+creds = ServiceAccountCredentials.from_json_keyfile_dict(json_key, scope)
+
 gc = gspread.authorize(creds)
 
 # 스프레드시트 및 워크시트 이름
